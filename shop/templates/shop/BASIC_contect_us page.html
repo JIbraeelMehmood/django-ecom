@@ -1,0 +1,78 @@
+{% extends 'shop/basic_page.html' %}
+{% block title %} Contect Us {% endblock %}
+{% block body %}
+         <div class="container">
+             <h3>Contact Us</h3>
+             <form  class="needs-validation" novalidate  action="/shop/contect" method="post">{% csrf_token %}
+                     <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name" required>
+                           <div class="valid-feedback">Looks good!</div>
+                     </div>
+                     <div class="form-group">
+                            <label for="name">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email" required>
+                            <div class="valid-feedback">Looks good!</div>
+                     </div>
+                     <div class="form-group">
+                            <label for="name">Phome</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Your Phone Number" required>
+                            <div class="valid-feedback">Looks good!</div>
+                     </div>
+
+                     <div class="form-group">
+                            <label for="desc">How May We Help You ?</label>
+                            <textarea class="form-control" id="desc" name="desc" rows="3" required></textarea>
+                               <div class="valid-feedback">Looks good!</div>
+                     </div>
+                     <div class="col-12">
+                        <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                              <label class="form-check-label" for="invalidCheck">Agree to terms and conditions</label>
+                          <div class="invalid-feedback">You must agree before submitting.</div>
+                        </div>
+                     </div>
+                     <div class="col-12">
+                          <button type="submit" class="btn btn-success">Submit</button>
+                     </div>
+
+             </form>
+         </div>
+
+
+   {% endblock %}
+
+{%block js%}
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+
+
+
+
+{% if thank %}
+alert('Thanks for contacting us. We wil get back to you soon!');
+document.location = "/shop/contect";
+{%endif%}
+</script>
+  {% endblock %}
+
+
+

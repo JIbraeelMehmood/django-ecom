@@ -1,0 +1,11 @@
+
+
+
+most important basic working:
+https://www.w3schools.com/bootstrap/bootstrap_templates.asp
+
+next step:
+https://getbootstrap.com/docs/4.0/examples/
+
+final step:
+https://startbootstrap.com/templates

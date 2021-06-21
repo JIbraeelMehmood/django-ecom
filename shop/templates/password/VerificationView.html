@@ -1,0 +1,198 @@
+
+
+
+<!--{% extends 'password/basic_page.html' %}-->
+<!--{% block title %}Reset Your Password{% endblock %}-->
+<!--{% block body %}-->
+<!--<br>-->
+<!--<br>-->
+
+<!--{% if otp %}-->
+<!--        <div class="modal-content">-->
+<!--          <div class="modal-header">-->
+<!--            <h5 class="modal-title" id="VirifyModalTitle">Verify Email Here</h5>-->
+<!--            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--              <span aria-hidden="true">&times;</span>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--          <div class="modal-body">-->
+<!--            <form action= "/shop/signup" method='post'>   {% csrf_token %}-->
+<!--                <div class="form-group">-->
+<!--                    <label for="otp_user">OTP_username</label>-->
+
+<!--                    <input type="hidden" class="form-control" value="{{user.user}}" id="otp_user" name="otp_user">-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="otp">OTP</label>-->
+<!--                    <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter Your OTP" required>-->
+<!--              </div>-->
+<!--                <button type="submit" class="btn btn-primary">Verify</button>-->
+<!--            </form>-->
+<!--          </div>-->
+<!--          <div class="modal-footer">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      {% else %}-->
+<!--        <div class="modal-content">-->
+<!--          <div class="modal-header">-->
+<!--            <h5 class="modal-title" id="signupModalTitle">SignUp Here</h5>-->
+<!--            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--              <span aria-hidden="true">&times;</span>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--          <div class="modal-body">-->
+<!--          <form action= "/shop/signup" method='post'>   {% csrf_token %}-->
+<!--              <div class="form-group">-->
+<!--                <label for="username">Username</label>-->
+<!--                <input type="text" class="form-control" id="username" name="username" placeholder="Choose a unique username" required>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="fname">First Name</label>-->
+<!--                <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your First Name" required>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="lname">Last Name</label>-->
+<!--                <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Your Last Name" required>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="email">Email address</label>-->
+<!--                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="pass1">Choose a password</label>-->
+<!--                <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Choose Your Password" required>-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="pass2">Confirm Password</label>-->
+<!--                <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Enter your password again" required>-->
+<!--              </div>-->
+<!--                <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--          </form>-->
+<!--          </div>-->
+<!--          <div class="modal-footer">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      {% endif %}-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--{% endblock %}-->
+
+
+
+
+
+
+
+
+
+
+<!--&lt;!&ndash;def handleSignUp(request):&ndash;&gt;-->
+<!--&lt;!&ndash;    if request.method == "POST":&ndash;&gt;-->
+<!--&lt;!&ndash;        otp_key = request.POST.get('otp')&ndash;&gt;-->
+<!--&lt;!&ndash;        if otp_key!=0:&ndash;&gt;-->
+<!--&lt;!&ndash;            if otp_key:&ndash;&gt;-->
+<!--&lt;!&ndash;                get_user = request.POST.get('otp_user')&ndash;&gt;-->
+<!--&lt;!&ndash;                confirm_otp_user = User.objects.get(username = get_user)&ndash;&gt;-->
+<!--&lt;!&ndash;                if int(otp_key) == UserOTP.objects.filter(user = confirm_otp_user).last().otp:&ndash;&gt;-->
+<!--&lt;!&ndash;                    messages.success(request, " Your Ecom has been successfully created")&ndash;&gt;-->
+<!--&lt;!&ndash;                    return redirect&ndash;&gt;-->
+<!--&lt;!&ndash;                else:&ndash;&gt;-->
+<!--&lt;!&ndash;                    messages.error(request,"You Enter A Wronf OTP")&ndash;&gt;-->
+<!--&lt;!&ndash;                return HttpResponse("2")&ndash;&gt;-->
+<!--&lt;!&ndash;                    # return render(request, 'shop/basic_page.html', {'otp': True, 'user': confirm_otp_user})&ndash;&gt;-->
+<!--&lt;!&ndash;        else:&ndash;&gt;-->
+<!--&lt;!&ndash;            # Get the post parameters&ndash;&gt;-->
+<!--&lt;!&ndash;            username = request.POST['username']&ndash;&gt;-->
+<!--&lt;!&ndash;            email = request.POST.get['email']&ndash;&gt;-->
+<!--&lt;!&ndash;            fname = request.POST['fname']&ndash;&gt;-->
+<!--&lt;!&ndash;            lname = request.POST['lname']&ndash;&gt;-->
+<!--&lt;!&ndash;            pass1 = request.POST['pass1']&ndash;&gt;-->
+<!--&lt;!&ndash;            pass2 = request.POST['pass2']&ndash;&gt;-->
+<!--&lt;!&ndash;            print(email)&ndash;&gt;-->
+<!--&lt;!&ndash;            # check for errorneous input&ndash;&gt;-->
+<!--&lt;!&ndash;            if len(username) < 10:&ndash;&gt;-->
+<!--&lt;!&ndash;                messages.error(request, " Your user name must be under 10 characters")&ndash;&gt;-->
+<!--&lt;!&ndash;                return redirect('shophome')&ndash;&gt;-->
+<!--&lt;!&ndash;            if not username.isalnum():&ndash;&gt;-->
+<!--&lt;!&ndash;                messages.error(request, " User name should only contain letters and numbers")&ndash;&gt;-->
+<!--&lt;!&ndash;                return redirect('shophome')&ndash;&gt;-->
+<!--&lt;!&ndash;            if (pass1 != pass2):&ndash;&gt;-->
+<!--&lt;!&ndash;                    messages.error(request, " Passwords do not match")&ndash;&gt;-->
+<!--&lt;!&ndash;                    return redirect('shophome')&ndash;&gt;-->
+<!--&lt;!&ndash;                    # Create the user&ndash;&gt;-->
+<!--&lt;!&ndash;                    myuser = User.objects.create_user(username, email, pass1)&ndash;&gt;-->
+<!--&lt;!&ndash;                    myuser.first_name = fname&ndash;&gt;-->
+<!--&lt;!&ndash;                    myuser.last_name = lname&ndash;&gt;-->
+<!--&lt;!&ndash;                    myuser.is_active = False&ndash;&gt;-->
+<!--&lt;!&ndash;                    myuser.save()&ndash;&gt;-->
+<!--&lt;!&ndash;                    myuser_otp = random.randint(100000,999999)&ndash;&gt;-->
+<!--&lt;!&ndash;                    UserOTP.objects.create(user = myuser , otp = myuser_otp)&ndash;&gt;-->
+<!--&lt;!&ndash;                    otp_mess ="{myuser.username}-This Is OTP Mail /n Your OTP:{myuser_otp}/n Thanks to Your Time ..!"&ndash;&gt;-->
+<!--&lt;!&ndash;                    send_mail(&ndash;&gt;-->
+<!--&lt;!&ndash;                        "Welcome to E-com - Veryfy Your Email",&ndash;&gt;-->
+<!--&lt;!&ndash;                         otp_mess,&ndash;&gt;-->
+<!--&lt;!&ndash;                        settings.EMAIL_HOST_USER,&ndash;&gt;-->
+<!--&lt;!&ndash;                        [myuser.email],&ndash;&gt;-->
+<!--&lt;!&ndash;                        fail_silently= False)&ndash;&gt;-->
+<!--&lt;!&ndash;        return HttpResponse("3")&ndash;&gt;-->
+<!--&lt;!&ndash;        # return HttpResponse("Something Wrong.! Please Try It Later.")&ndash;&gt;-->
+<!--&lt;!&ndash;        # return render(request, 'shop/basic_page.html',{'otp': True,'user':myuser})&ndash;&gt;-->
+<!--&lt;!&ndash;                # messages.success(request, " Your iCoder has been successfully created")&ndash;&gt;-->
+<!--&lt;!&ndash;                # return redirect&ndash;&gt;-->
+<!--&lt;!&ndash;    else:&ndash;&gt;-->
+<!--&lt;!&ndash;        return HttpResponse("404 - Not found")&ndash;&gt;-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from django.core.mail import send_mail
+# from django.conf import settings
+# import random
+
+
+
+
+from django.contrib.auth.models import User
+
+
+
+
+
+
+
+
+
+
+
+
+
+

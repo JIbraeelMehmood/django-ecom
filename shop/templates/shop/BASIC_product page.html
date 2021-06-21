@@ -1,0 +1,448 @@
+{% extends 'shop/basic_page.html' %}
+{% block title%} {{products.product_name}}- My Awesome Cart{% endblock %}
+{% block css %}
+#preview{
+	margin-top: 5px;
+<!--	border:1px solid black;-->
+	width:650px;
+	height:500px;
+	background-repeat: no-repeat;
+	margin-left: auto;
+	margin-right: auto;
+}
+<!--#preheading{-->
+<!--margin-top: 200px;-->
+<!--	text-align: center;-->
+<!--}-->
+
+#samples img {
+	margin: 10px;
+	display: block;
+	 border: 2px solid #6A6462;
+}
+#samples img:hover {
+	 cursor: zoom-in;
+	 border: 0;
+	 -moz-box-shadow:2px 2px 7px 2px rgba(130,130,130,1),-1px -1px 7px 2px rgba(130,130,130,1);
+	-webkit-box-shadow: 2px 2px 7px 2px rgba(130,130,130,.7),-1px -1px 7px 2px rgba(130,130,130,1);
+	box-shadow: 2px 2px 7px 2px rgba(130,130,130,.7),-2px -2px 7px 2px rgba(130,130,130,1);
+}
+@media screen and (max-width: 767px){
+	#samples img {
+		display: inline-block;
+	}
+}
+
+<!--____________________________________________________________________________________________-->
+.btn-grey{
+    background-color:#D8D8D8;
+	color:#FFF;
+}
+.rating-block{
+	background-color:#E6E6FA;
+	border:1px solid #EFEFEF;
+	padding:15px 15px 20px 15px;
+	border-radius:3px;
+}
+.bold{
+	font-weight:700;
+}
+.padding-bottom-7{
+	padding-bottom:7px;
+}
+
+.review-block{
+	background-color:#E6E6FA;
+	border:1px solid #EFEFEF;
+	padding:15px;
+	border-radius:20px;
+	margin-bottom:15px;
+}
+.review-block-name{
+	font-size:14px;
+	margin:5px 0;
+}
+.review-block-date{
+	font-size:12px;
+}
+.review-block-rate{
+	font-size:13px;
+	margin-bottom:15px;
+}
+.review-block-title{
+	font-size:15px;
+	font-weight:700;
+	margin-bottom:10px;
+}
+.review-block-description{
+	font-size:14px;
+}
+
+
+{% endblock %}
+
+
+{% block body %}
+<!-----------------------------green----------------------------------------->
+<div class="container my-4" >
+<!--    style="background-color:green"-->
+                               {% for item in for_rate_products %}
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/shop">Home</a></li>
+              <li class="breadcrumb-item"><a  href="/shop/category/{{item.category}}">{{item.category}}</a></li>
+              <li class="breadcrumb-item"><a  href="/shop/category/{{item.sub_category}}">{{item.sub_category}}</a></li>
+              <li class="breadcrumb-item active">{{item.product_name}}</li>
+            </ol>
+<!----------------------------------yellow----------------------------------------->
+    <div class="row" >
+        <div class="col-md-5"  >
+<!--            style="background-color:yellow"-->
+                <hr>
+                <h4 >{{item.product_name}}</h4>
+                <hr>
+            <div id ="samples"class="row" >
+                <img  data-toggle="modal" data-target="#prodModal" id="zoom1" width="300px" height="385px" onmousemove="zoomIn(event)" onmouseout="zoomOut()" src="/media/{{item.image}}">
+            </div>
+            <div class="row">
+                 {% if user.is_authenticated %}
+                <a href="rate/{{item.id}}" class="btn btn-outline-info waves-effect  mx-3" role="button">Leave the Review & Rating</a>
+                   {% endif %}
+            </div>
+<!--__________________________________________________________________________________________________-->
+                                    <h4>Reviews</h4>
+                                    {% for reitem in reviews %}
+<!--        <div class="row">-->
+<!--			<div class="col-sm-7">-->
+            <hr/>
+            <div class="review-block" >
+<!--                style="background-color:gray"-->
+                <div class="row" >
+                    <div class="col-sm-12" >
+<!--                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">-->
+                        <div class="review-block-name"><a href="#">{{reitem.review_user.first_name }} {{reitem.review_user.last_name }}</a></div>
+                        <div class="review-block-date"> Date Join: {{reitem.review_user.date_joined }}</div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="review-block-rate">
+                            <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"> </span>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+<!--                                {{reitem.review_user}}-->
+                            </button>
+                            <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="review-block-title">{{reitem.title_text}}
+                            <div class="review-block-date">Review Time: {{reitem.date}}</div>
+                        </div>
+                        <span> <b>{{reitem.rate}}</b> Star</span>
+                        {% if reitem.rate == 1 %}
+                            <span style="color: orange;" class="fa fa-star checked"></span>
+                            <span  class="fa fa-star checked"></span>
+                            <span  class="fa fa-star checked"></span>
+                            <span  class="fa fa-star checked"></span>
+                            <span  class="fa fa-star checked"></span>
+                          {% elif reitem.rate == 2 %}
+                             <span style="color: orange;" class="fa fa-star checked"></span>
+                             <span style="color: orange;" class="fa fa-star checked"></span>
+                             <span  class="fa fa-star checked"></span>
+                             <span  class="fa fa-star checked"></span>
+                             <span " class="fa fa-star checked"></span>
+                          {% elif reitem.rate == 3 %}
+                             <span  style="color: orange;"class="fa fa-star checked"></span>
+                             <span  style="color: orange;"class="fa fa-star checked"></span>
+                             <span  style="color: orange;"class="fa fa-star checked"></span>
+                             <span  class="fa fa-star checked"></span>
+                             <span  class="fa fa-star checked"></span>
+
+                          {% elif reitem.rate == 4 %}
+                             <span style="color: orange;" class="fa fa-star checked"></span>
+                             <span style="color: orange;" class="fa fa-star checked"></span>
+                             <span style="color: orange;" class="fa fa-star checked"></span>
+                             <span style="color: orange;" class="fa fa-star checked"></span>
+                             <span  class="fa fa-star checked"></span>
+
+                          {% elif reitem.rate == 5 %}
+                             <span  style="color: orange;"class="fa fa-star checked"></span>
+                             <span  style="color: orange;"class="fa fa-star checked"></span>
+                             <span  style="color: orange;"class="fa fa-star checked"></span>
+                             <span  style="color: orange;"class="fa fa-star checked"></span>
+                             <span  style="color: orange;"class="fa fa-star checked"></span>
+
+                        {% else %}
+                             <b>No Recent Review</b>
+                        {% endif %}
+
+                        <div class="review-block-description">{{reitem.review_text}}</div>
+                    </div>
+                </div>
+
+            </div>
+<!--			</div>-->
+<!--		</div>-->
+                {% endfor %}
+        </div>
+<!----------------------------RED---------------------------------------------->
+<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12" >
+<!--    style="background-color:red" -->
+    <div  id="preview" >
+        <div  onmousemove="zoomIn(event)"> </div>
+        <div id="preheading">
+<!--                        <h3 >preview</h3>-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="rating-block">
+                            <h4>Average user rating</h4>
+                            <h2 class="bold padding-bottom-7"><b>{{ reviews_avg.rate__avg }}</b> <small>/5</small></h2>
+                            <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+                              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+                              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+                              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+                              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+                              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </button>
+                             <p>based on <b>{{ reviews_count }}</b> reviews  </p>
+                        </div>
+<!--     ====================================================================================                   -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                   -->
+                    </div>
+<!--                <div class="col-sm-3">-->
+<!--				<h4>Rating breakdown</h4>-->
+<!--				<div class="pull-left">-->
+<!--					<div class="pull-left" style="width:35px; line-height:1;">-->
+<!--						<div style="height:9px; margin:5px 0;">5 <span class="glyphicon glyphicon-star"></span></div>-->
+<!--					</div>-->
+<!--					<div class="pull-left" style="width:180px;">-->
+<!--						<div class="progress" style="height:9px; margin:8px 0;">-->
+<!--						  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5"-->
+<!--                               style="width: 1000%">-->
+<!--&lt;!&ndash;                               {{ reviews_count }}&ndash;&gt;-->
+<!--							<span class="sr-only">80% Complete (danger)</span>-->
+<!--						  </div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="pull-right" style="margin-left:10px;">1</div>-->
+<!--				</div>-->
+<!--				<div class="pull-left">-->
+<!--					<div class="pull-left" style="width:35px; line-height:1;">-->
+<!--						<div style="height:9px; margin:5px 0;">4 <span class="glyphicon glyphicon-star"></span></div>-->
+<!--					</div>-->
+<!--					<div class="pull-left" style="width:180px;">-->
+<!--						<div class="progress" style="height:9px; margin:8px 0;">-->
+<!--						  <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">-->
+<!--							<span class="sr-only">80% Complete (danger)</span>-->
+<!--						  </div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="pull-right" style="margin-left:10px;">1</div>-->
+<!--				</div>-->
+<!--				<div class="pull-left">-->
+<!--					<div class="pull-left" style="width:35px; line-height:1;">-->
+<!--						<div style="height:9px; margin:5px 0;">3 <span class="glyphicon glyphicon-star"></span></div>-->
+<!--					</div>-->
+<!--					<div class="pull-left" style="width:180px;">-->
+<!--						<div class="progress" style="height:9px; margin:8px 0;">-->
+<!--						  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">-->
+<!--							<span class="sr-only">80% Complete (danger)</span>-->
+<!--						  </div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="pull-right" style="margin-left:10px;">0</div>-->
+<!--				</div>-->
+<!--				<div class="pull-left">-->
+<!--					<div class="pull-left" style="width:35px; line-height:1;">-->
+<!--						<div style="height:9px; margin:5px 0;">2 <span class="glyphicon glyphicon-star"></span></div>-->
+<!--					</div>-->
+<!--					<div class="pull-left" style="width:180px;">-->
+<!--						<div class="progress" style="height:9px; margin:8px 0;">-->
+<!--						  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">-->
+<!--							<span class="sr-only">80% Complete (danger)</span>-->
+<!--						  </div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="pull-right" style="margin-left:10px;">0</div>-->
+<!--				</div>-->
+<!--				<div class="pull-left">-->
+<!--					<div class="pull-left" style="width:35px; line-height:1;">-->
+<!--						<div style="height:9px; margin:5px 0;">1 <span class="glyphicon glyphicon-star"></span></div>-->
+<!--					</div>-->
+<!--					<div class="pull-left" style="width:180px;">-->
+<!--						<div class="progress" style="height:9px; margin:8px 0;">-->
+<!--						  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">-->
+<!--							<span class="sr-only">80% Complete (danger)</span>-->
+<!--						  </div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="pull-right" style="margin-left:10px;">0</div>-->
+<!--				</div>-->
+<!--			</div>-->
+		</div>
+    </div> <!-- /container -->
+        </div>
+    </div>
+    <hr style="background-color:gray;border: 8px solid #ddd;">
+<!--    ===========================================================================================        -->
+    <div class="row">
+        <h5>Price:</h5>&nbsp;&nbsp;<p><b> Rs. {{item.price}}</b></p>
+    </div>
+    <div class="row">
+        <h5>Product Descri:</h5>&nbsp&nbsp;
+        <p>
+<!--        {{products.product_descri}}-->{{ item.product_descri | linebreaks }}
+        </p>
+    </div>
+    <div class="row">
+        <h5>Sub Category:</h5>&nbsp;&nbsp;<p>{{item.sub_category}}</p>
+    </div>
+    <div class="row">
+        <h5>Last upDate:</h5>&nbsp;&nbsp;<p>{{item.product_date}}</p>
+    </div>
+<!--              <div class="row">-->
+<!--                <h6>Rating:</h6>&nbsp;&nbsp;<p>{{products.product_rating}}</p>-->
+<!--              </div>-->
+    <div class="row">
+        <h5>Brand:</h5>&nbsp;&nbsp;<p style="color:red">{{item.product_brand}}</p>
+    </div>
+<!--    ___________________________________________________________________________________________   -->
+</div>
+    </div>
+</div>
+
+
+
+
+
+
+<!--__________Model_____________-->
+
+<div class="modal fade" id="prodModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupModalTitle">Feature</h5>
+      </div>
+      <div class="modal-body">
+              <div class="form-group">
+                <label for="fname">Feature-1</label>
+                 &nbsp;<p><b> Rs. {{item.price}}</b></p>
+              </div>
+              <div class="form-group">
+                <label for="lname">Feature-2</label>
+                    &nbsp;<p><b> Rs. {{item.price}}</b></p>
+              </div>
+              <div class="form-group">
+                <label for="email">Feature-3</label>
+                 &nbsp;<p><b> Rs. {{item.price}}</b></p>
+              </div>
+              <div class="form-group">
+                <label for="pass1">Feature-4</label>
+                 &nbsp;<p><b> Rs. {{item.price}}</b></p>
+              </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--_________________________________-->
+<script>
+ function zoomIn(event) {
+      var pre = document.getElementById("preview");
+       pre.style.visibility = "visible";
+       var pre_head = document.getElementById("preheading");
+               pre_head.style.visibility = "hidden";
+      if ($('#zoom1').is(':hover')) {
+            var img = document.getElementById("zoom1");
+            pre.style.backgroundImage = "url('/media//{{item.image}}')";
+
+        }
+  var posX = event.offsetX;
+  var posY = event.offsetY;
+  pre.style.backgroundPosition=(-posX*1.5)+"px "+(-posY*1.5)+"px";
+
+}
+
+function zoomOut() {
+  var pre = document.getElementById("preview");
+  pre.style.visibility = "hidden";
+   var pre_head = document.getElementById("preheading");
+    pre_head.style.visibility = "visible";
+}
+</script>
+  {% endfor %}
+
+{% endblock %}
+
+{% block js %}
+<script>
+
+
+
+
+console.log('working');
+if(localStorage.getItem('cart') == null){
+var cart = {};
+}
+else
+{
+cart = JSON.parse(localStorage.getItem('cart'));
+document.getElementById('cart').innerHTML = Object.keys(cart).length;
+}
+$('.cart').click(function(){
+console.log('clicked');
+var idstr = this.id.toString();
+console.log(idstr);
+if (cart[idstr] !=undefined){
+cart[idstr] = cart[idstr] + 1;
+}
+else
+{
+cart[idstr] = 1;
+}
+console.log(cart);
+localStorage.setItem('cart', JSON.stringify(cart));
+document.getElementById('cart').innerHTML = Object.keys(cart).length;
+});
+
+
+$('#popcart').popover();
+document.getElementById("popcart").setAttribute('data-content', '<h5>Cart for your items in my shopping cart</h5>');
+</script>
+{% endblock %}
